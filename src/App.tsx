@@ -4,16 +4,15 @@ import AdminLayout from "./components/admin/layout/AdminLayout";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Admissions from "@/pages/Admissions";
+import Courses from "./pages/Courses";
 // import AdmissionDetails from "@/pages/admin/AdmissionDetails";
 // import FormBuilder from "@/pages/admin/FormBuilder";
-// import Courses from "@/pages/admin/Courses";
 // import Gallery from "@/pages/admin/Gallery";
 // import News from "@/pages/admin/News";
 // import Transport from "@/pages/admin/Transport";
 // import Events from "@/pages/admin/Events";
 // import Hostel from "@/pages/admin/Hostel";
 // import Settings from "@/pages/admin/Settings";
-
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -24,7 +23,6 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 function App() {
   return (
     <>
-      
       <BrowserRouter>
         <Routes>
           {/* Login Route - No Layout */}
@@ -41,20 +39,20 @@ function App() {
           >
             {/* Redirect root to dashboard */}
             <Route index element={<Navigate to="/dashboard" replace />} />
-            
+
             {/* Admin Pages */}
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="admissions" element={<Admissions />} />
+            <Route path="courses" element={<Courses />} />
             {/* <Route path="admissions/:id" element={<AdmissionDetails />} />
             <Route path="form-builder" element={<FormBuilder />} />
-            <Route path="courses" element={<Courses />} />
             <Route path="gallery" element={<Gallery />} />
             <Route path="news" element={<News />} />
             <Route path="transport" element={<Transport />} />
             <Route path="events" element={<Events />} />
             <Route path="hostel" element={<Hostel />} />
             <Route path="settings" element={<Settings />} /> */}
-            
+
             {/* Catch all - redirect to dashboard */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
