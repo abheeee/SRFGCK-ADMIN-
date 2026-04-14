@@ -39,33 +39,22 @@ const StatsCards: React.FC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <div className="grid w-full min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
       {stats.map((stat, index) => (
-        <Card
-          key={index}
-          className="p-2 sm:p-0"
-        >
-          <CardHeader className="flex flex-row items-center justify-between pb-1 sm:pb-2">
-            
-            {/* Title */}
-            <CardTitle className="text-xs sm:text-sm font-medium">
-              {stat.title}
+        <Card key={index} className="w-full min-w-0 overflow-hidden p-2 sm:p-0">
+          <CardHeader className="flex min-w-0 flex-row items-center justify-between gap-3 pb-1 sm:pb-2">
+            <CardTitle className="min-w-0 text-xs font-medium sm:text-sm">
+              <span className="block truncate">{stat.title}</span>
             </CardTitle>
 
-            {/* Icon */}
-            <div className={`p-2 rounded-lg ${stat.color}`}>
+            <div className={`shrink-0 rounded-lg p-2 ${stat.color}`}>
               <stat.icon className="h-4 w-4 text-white" />
             </div>
-
           </CardHeader>
 
           <CardContent className="pt-1 sm:pt-2">
-            {/* Value */}
-            <div className="text-lg sm:text-2xl font-bold">
-              {stat.value}
-            </div>
+            <div className="text-lg font-bold sm:text-2xl">{stat.value}</div>
 
-            {/* Change */}
             <p
               className={`text-[11px] sm:text-xs ${
                 stat.changeType === "positive"

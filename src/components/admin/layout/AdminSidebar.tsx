@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 interface AdminSidebarProps {
-  onClose?: () => void; // for mobile close
+  onClose?: () => void;
 }
 
 const menuItems = [
@@ -32,50 +32,63 @@ const menuItems = [
 
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ onClose }) => {
   return (
-    <aside className="h-full w-64 bg-white border-r flex flex-col">
-
-      {/* Logo */}
-      <div className="flex h-14 sm:h-16 items-center justify-between border-b px-4">
-        <h1 className="text-lg sm:text-xl font-bold text-black">
+    <aside className="flex h-full w-full flex-col overflow-hidden bg-white">
+      {/* Top */}
+      <div className="flex h-14 sm:h-16 shrink-0 items-center justify-between border-b px-4">
+        <h1 className="truncate text-lg font-bold text-black sm:text-xl">
           College Admin
         </h1>
 
-        {/* Close button (only mobile) */}
         {onClose && (
           <button
-            className="md:hidden text-gray-500 text-lg"
+            type="button"
             onClick={onClose}
+            className="md:hidden rounded-md p-1 text-gray-500 transition hover:bg-gray-100 hover:text-black"
           >
             ✕
           </button>
         )}
       </div>
 
-      {/* Navigation */}
-     <nav className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-1">
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4">
+        <div className="space-y-1">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
 
-        {menuItems.map((item) => {
-          const Icon = item.icon;
-
-          return (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              onClick={onClose} // close on mobile click
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm sm:text-base transition-all ${
-                  isActive
-                    ? "bg-primary text-white shadow-sm"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`
-              }
-            >
-              <Icon className="h-5 w-5 flex-shrink-0" />
-              <span className="truncate text-black">{item.label}</span>
-            </NavLink>
-          );
-        })}
-
+            return (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm sm:text-base transition-all ${
+                    isActive
+                      ? "bg-black text-white shadow-sm"
+                      : "text-gray-700 hover:bg-gray-100"
+                  }`
+                }
+              >
+                <Icon
+                  className={`h-5 w-5 flex-shrink-0 ${
+                    item.path === window.location.pathname
+                      ? "text-white"
+                      : "text-gray-600"
+                  }`}
+                />
+                <span
+                  className={`truncate ${
+                    item.path === window.location.pathname
+                      ? "text-white"
+                      : "text-black"
+                  }`}
+                >
+                  {item.label}
+                </span>
+              </NavLink>
+            );
+          })}
+        </div>
       </nav>
     </aside>
   );

@@ -6,30 +6,37 @@ import CourseWiseStats from "@/components/admin/dashboard/CourseWiseStats";
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="space-y-4 sm:space-y-6">
-
+    <div className="w-full min-w-0 overflow-x-hidden space-y-4 sm:space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">
+      <div className="min-w-0">
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl md:text-3xl">
           Dashboard
         </h1>
-        <p className="text-xs sm:text-sm text-muted-foreground">
+        <p className="text-xs text-muted-foreground sm:text-sm">
           Welcome back! Here's your admission summary
         </p>
       </div>
 
       {/* Stats */}
-      <StatsCards />
+      <div className="w-full min-w-0">
+        <StatsCards />
+      </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        <AdmissionChart />
-        <CourseWiseStats />
+      <div className="grid w-full min-w-0 grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-3">
+        <div className="min-w-0 xl:col-span-2">
+          <AdmissionChart />
+        </div>
+
+        <div className="min-w-0">
+          <CourseWiseStats />
+        </div>
       </div>
 
       {/* Recent Applications */}
-      <RecentApplications />
-
+      <div className="w-full min-w-0">
+        <RecentApplications />
+      </div>
     </div>
   );
 };

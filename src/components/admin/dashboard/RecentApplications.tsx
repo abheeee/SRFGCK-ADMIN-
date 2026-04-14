@@ -1,7 +1,12 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Table, TableBody, TableCell, TableHead, TableHeader, TableRow
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,11 +23,16 @@ const recentApplications = [
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case "pending": return "bg-yellow-500";
-    case "verified": return "bg-blue-500";
-    case "approved": return "bg-green-500";
-    case "rejected": return "bg-red-500";
-    default: return "bg-gray-500";
+    case "pending":
+      return "bg-yellow-500";
+    case "verified":
+      return "bg-blue-500";
+    case "approved":
+      return "bg-green-500";
+    case "rejected":
+      return "bg-red-500";
+    default:
+      return "bg-gray-500";
   }
 };
 
@@ -30,18 +40,17 @@ const RecentApplications: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Card>
+    <Card className="w-full min-w-0 overflow-hidden">
       <CardHeader className="pb-2 sm:pb-4">
         <CardTitle className="text-base sm:text-lg">
           Recent Applications
         </CardTitle>
       </CardHeader>
 
-      <CardContent>
-
-        {/* ✅ Desktop Table */}
-        <div className="hidden md:block overflow-x-auto">
-          <Table>
+      <CardContent className="min-w-0 overflow-hidden">
+        {/* Desktop Table */}
+        <div className="hidden w-full min-w-0 overflow-x-auto md:block">
+          <Table className="w-full min-w-0">
             <TableHeader>
               <TableRow>
                 <TableHead>App No.</TableHead>
@@ -49,17 +58,19 @@ const RecentApplications: React.FC = () => {
                 <TableHead>Course</TableHead>
                 <TableHead>Date</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead className="w-[80px]">Action</TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
               {recentApplications.map((app) => (
                 <TableRow key={app.id}>
-                  <TableCell className="font-medium">{app.id}</TableCell>
-                  <TableCell>{app.name}</TableCell>
-                  <TableCell>{app.course}</TableCell>
-                  <TableCell>{app.date}</TableCell>
+                  <TableCell className="font-medium whitespace-nowrap">
+                    {app.id}
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap">{app.name}</TableCell>
+                  <TableCell className="whitespace-nowrap">{app.course}</TableCell>
+                  <TableCell className="whitespace-nowrap">{app.date}</TableCell>
                   <TableCell>
                     <Badge className={getStatusColor(app.status)}>
                       {app.status}
@@ -80,43 +91,38 @@ const RecentApplications: React.FC = () => {
           </Table>
         </div>
 
-        {/* ✅ Mobile Card View */}
+        {/* Mobile Card View */}
         <div className="grid gap-3 md:hidden">
           {recentApplications.map((app) => (
             <div
               key={app.id}
-              className="border rounded-lg p-3 space-y-2 shadow-sm"
+              className="w-full min-w-0 space-y-2 rounded-lg border p-3 shadow-sm overflow-hidden"
             >
-              {/* Top */}
-              <div className="flex justify-between items-center">
-                <p className="font-semibold text-sm">{app.id}</p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="truncate font-semibold text-sm">{app.id}</p>
                 <Badge className={getStatusColor(app.status)}>
                   {app.status}
                 </Badge>
               </div>
 
-              {/* Name */}
-              <p className="text-sm font-medium">{app.name}</p>
+              <p className="truncate text-sm font-medium">{app.name}</p>
 
-              {/* Info */}
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>{app.course}</span>
-                <span>{app.date}</span>
+              <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+                <span className="truncate">{app.course}</span>
+                <span className="shrink-0">{app.date}</span>
               </div>
 
-              {/* Action */}
               <Button
                 size="sm"
                 className="w-full"
                 onClick={() => navigate(`/admissions/${app.id}`)}
               >
-                <Eye className="h-4 w-4 mr-2" />
+                <Eye className="mr-2 h-4 w-4" />
                 View Details
               </Button>
             </div>
           ))}
         </div>
-
       </CardContent>
     </Card>
   );

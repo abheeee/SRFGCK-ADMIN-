@@ -22,39 +22,35 @@ const data = [
 
 const AdmissionChart: React.FC = () => {
   return (
-    <Card>
+    <Card className="w-full min-w-0 overflow-hidden">
       <CardHeader className="pb-2 sm:pb-4">
         <CardTitle className="text-base sm:text-lg">
           Admission Trends
         </CardTitle>
       </CardHeader>
 
-      <CardContent>
-        {/* Responsive height */}
-        <div className="h-[220px] sm:h-[300px]">
+      <CardContent className="min-w-0 overflow-hidden">
+        <div className="h-[220px] w-full min-w-0 sm:h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={data}
-              margin={{ top: 5, right: 10, left: -10, bottom: 5 }}
+              margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
 
-              {/* X Axis */}
               <XAxis
                 dataKey="month"
                 tick={{ fontSize: 10 }}
                 interval={0}
               />
 
-              {/* Y Axis */}
               <YAxis
                 tick={{ fontSize: 10 }}
-                width={30}
+                width={28}
               />
 
               <Tooltip />
 
-              {/* Legend optimized */}
               <Legend
                 wrapperStyle={{
                   fontSize: "10px",
@@ -67,7 +63,7 @@ const AdmissionChart: React.FC = () => {
                 dataKey="applications"
                 stroke="#3b82f6"
                 strokeWidth={2}
-                dot={false}   // cleaner mobile view
+                dot={false}
                 name="Applications"
               />
 

@@ -8,44 +8,50 @@ const AdminLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50">
-
+    <div className="flex h-screen w-full max-w-full flex-col overflow-hidden bg-gray-50">
       {/* Header */}
-      <AdminHeader onMenuClick={() => setSidebarOpen(true)} />
+      <div className="shrink-0 w-full">
+        <AdminHeader onMenuClick={() => setSidebarOpen(true)} />
+      </div>
 
-      <div className="flex flex-1">
-
-        {/* ✅ Desktop Sidebar */}
-        <aside className="hidden md:flex md:flex-col md:w-64 md:fixed md:inset-y-0 md:top-16 bg-white border-r z-40">
+      {/* Body */}
+      <div className="flex flex-1 min-h-0 w-full overflow-hidden">
+        {/* Desktop Sidebar */}
+        <aside className="hidden md:flex md:w-64 md:shrink-0 overflow-hidden border-r bg-white">
           <AdminSidebar />
         </aside>
 
-        {/* ✅ Mobile Sidebar */}
+        {/* Mobile Sidebar */}
         {sidebarOpen && (
           <div className="fixed inset-0 z-50 flex md:hidden">
-
             {/* Overlay */}
-            <div
-              className="fixed inset-0 bg-black/50"
+            <button
+              type="button"
+              aria-label="Close sidebar overlay"
+              className="absolute inset-0 bg-black/50"
               onClick={() => setSidebarOpen(false)}
             />
 
-            {/* Sidebar */}
-            <div className="relative w-64 bg-white h-full shadow-lg">
+            {/* Drawer */}
+            <div className="relative h-full w-[82vw] max-w-[280px] overflow-hidden bg-white shadow-xl">
               <AdminSidebar onClose={() => setSidebarOpen(false)} />
             </div>
           </div>
         )}
 
-        {/* ✅ Main Content */}
-        <main className="flex-1 md:ml-64 p-3 sm:p-4 md:p-6 overflow-y-auto">
-          <Outlet />
-        </main>
+        {/* Main Section */}
+        <div className="flex flex-1 min-w-0 min-h-0 flex-col overflow-hidden">
+          <main className="flex-1 min-h-0 min-w-0 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-6">
+            <div className="w-full min-w-0">
+              <Outlet />
+            </div>
+          </main>
 
+          <div className="shrink-0 w-full border-t bg-white">
+            <AdminFooter />
+          </div>
+        </div>
       </div>
-
-      {/* Footer */}
-      <AdminFooter />
     </div>
   );
 };
