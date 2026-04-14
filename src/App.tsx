@@ -5,6 +5,7 @@ import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Admissions from "@/pages/Admissions";
 import Courses from "./pages/Courses";
+import News from "./pages/News";
 // import AdmissionDetails from "@/pages/admin/AdmissionDetails";
 // import FormBuilder from "@/pages/admin/FormBuilder";
 // import Gallery from "@/pages/admin/Gallery";
@@ -44,6 +45,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="admissions" element={<Admissions />} />
             <Route path="courses" element={<Courses />} />
+            <Route path="news" element={<News />}/>
             {/* <Route path="admissions/:id" element={<AdmissionDetails />} />
             <Route path="form-builder" element={<FormBuilder />} />
             <Route path="gallery" element={<Gallery />} />
