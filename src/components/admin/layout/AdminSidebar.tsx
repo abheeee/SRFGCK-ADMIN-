@@ -21,7 +21,7 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   { icon: FileText, label: "Admissions", path: "/admissions" },
   { icon: PenTool, label: "Form Builder", path: "/form-builder" },
-{ icon: BookOpen, label: "Courses", path: "/courses" },
+  { icon: BookOpen, label: "Courses", path: "/courses" },
   { icon: Image, label: "Gallery", path: "/gallery" },
   { icon: Newspaper, label: "News", path: "/news" },
   { icon: Bus, label: "Transport", path: "/transport" },
@@ -64,22 +64,22 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onClose }) => {
                 className={({ isActive }) =>
                   `flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm sm:text-base transition-all ${
                     isActive
-                      ? "bg-black text-white shadow-sm"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-gray-500 text-black"
+                      : "text-gray-700 hover:bg-gray-50"
                   }`
                 }
               >
                 <Icon
                   className={`h-5 w-5 flex-shrink-0 ${
                     item.path === window.location.pathname
-                      ? "text-white"
+                      ? "text-black"
                       : "text-gray-600"
                   }`}
                 />
                 <span
                   className={`truncate ${
                     item.path === window.location.pathname
-                      ? "text-white"
+                      ? "text-black"
                       : "text-black"
                   }`}
                 >

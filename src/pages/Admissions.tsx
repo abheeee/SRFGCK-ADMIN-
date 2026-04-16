@@ -1,75 +1,95 @@
-import React, { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import React from "react";
+import { Users, FileText, ShieldCheck, Clock3 } from "lucide-react";
+
 import ApplicationTable from "@/components/admin/admissions/ApplicationTable";
+import ApplicationDetails from "@/components/admin/admissions/ApplicationDetails";
+import DocumentViewer from "@/components/admin/admissions/DocumentViewer";
+import VerificationBadge from "@/components/admin/admissions/VerificationBadge";
+import StatusUpdateDialog from "@/components/admin/admissions/StatusUpdateDialog";
+
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Admissions: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
   return (
-    <div className="space-y-4 sm:space-y-6">
-
-      {/* Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
-
-        {/* Title */}
-        <div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
-            Admissions
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Manage and review student applications
-          </p>
-        </div>
-
-        {/* Search */}
-        <div className="relative w-full sm:w-72 md:w-96">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search applications..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 h-9 sm:h-10 text-sm"
-          />
-        </div>
+    <div className="space-y-6 p-4 sm:p-6">
+      <div>
+        <h1 className="text-2xl font-bold sm:text-3xl">Admissions Management</h1>
+        <p className="text-sm text-muted-foreground">
+          Manage student applications, documents, verification, and status updates
+        </p>
       </div>
 
-      {/* Tabs */}
-      <Tabs defaultValue="all" className="space-y-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Card className="rounded-2xl shadow-sm">
+          <CardContent className="flex items-center justify-between p-5">
+            <div>
+              <p className="text-sm text-muted-foreground">Total Applications</p>
+              <h2 className="mt-1 text-2xl font-bold">156</h2>
+            </div>
+            <Users className="h-5 w-5 text-primary" />
+          </CardContent>
+        </Card>
 
-        {/* Scrollable Tabs for mobile */}
-        <div className="overflow-x-auto">
-          <TabsList className="flex w-max min-w-full gap-2">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="pending">Pending</TabsTrigger>
-            <TabsTrigger value="verified">Verified</TabsTrigger>
-            <TabsTrigger value="approved">Approved</TabsTrigger>
-            <TabsTrigger value="rejected">Rejected</TabsTrigger>
-          </TabsList>
-        </div>
+        <Card className="rounded-2xl shadow-sm">
+          <CardContent className="flex items-center justify-between p-5">
+            <div>
+              <p className="text-sm text-muted-foreground">Documents</p>
+              <h2 className="mt-1 text-2xl font-bold">420</h2>
+            </div>
+            <FileText className="h-5 w-5 text-primary" />
+          </CardContent>
+        </Card>
 
-        {/* Content */}
-        <TabsContent value="all">
-          <ApplicationTable status="all" searchTerm={searchTerm} />
+        <Card className="rounded-2xl shadow-sm">
+          <CardContent className="flex items-center justify-between p-5">
+            <div>
+              <p className="text-sm text-muted-foreground">Verified</p>
+              <h2 className="mt-1 text-2xl font-bold">98</h2>
+            </div>
+            <ShieldCheck className="h-5 w-5 text-primary" />
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl shadow-sm">
+          <CardContent className="flex items-center justify-between p-5">
+            <div>
+              <p className="text-sm text-muted-foreground">Pending</p>
+              <h2 className="mt-1 text-2xl font-bold">58</h2>
+            </div>
+            <Clock3 className="h-5 w-5 text-primary" />
+          </CardContent>
+        </Card>
+      </div>
+
+      <Tabs defaultValue="applications" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-5">
+          <TabsTrigger value="applications">Applications</TabsTrigger>
+          <TabsTrigger value="details">Details</TabsTrigger>
+          <TabsTrigger value="documents">Documents</TabsTrigger>
+          <TabsTrigger value="verification">Verification</TabsTrigger>
+          <TabsTrigger value="status">Update Status</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="applications">
+          <ApplicationTable />
         </TabsContent>
 
-        <TabsContent value="pending">
-          <ApplicationTable status="pending" searchTerm={searchTerm} />
+        <TabsContent value="details">
+          <ApplicationDetails />
         </TabsContent>
 
-        <TabsContent value="verified">
-          <ApplicationTable status="verified" searchTerm={searchTerm} />
+        <TabsContent value="documents">
+          <DocumentViewer />
         </TabsContent>
 
-        <TabsContent value="approved">
-          <ApplicationTable status="approved" searchTerm={searchTerm} />
+        <TabsContent value="verification">
+          <VerificationBadge />
         </TabsContent>
 
-        <TabsContent value="rejected">
-          <ApplicationTable status="rejected" searchTerm={searchTerm} />
+        <TabsContent value="status">
+          <StatusUpdateDialog />
         </TabsContent>
-
       </Tabs>
     </div>
   );
