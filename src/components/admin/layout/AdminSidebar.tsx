@@ -20,7 +20,7 @@ interface AdminSidebarProps {
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   { icon: FileText, label: "Admissions", path: "/admissions" },
-  { icon: PenTool, label: "Form Builder", path: "/form-builder" },
+  
   { icon: BookOpen, label: "Courses", path: "/courses" },
   { icon: Image, label: "Gallery", path: "/gallery" },
   { icon: Newspaper, label: "News", path: "/news" },
