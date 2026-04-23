@@ -1,112 +1,145 @@
-import React from "react";
-import {
-  Layers3,
-  BookOpen,
-  GraduationCap,
-  Building2,
-} from "lucide-react";
+import { useState } from "react";
+import CourseHeader from "@/components/admin/courses/CourseHeader";
+import CourseForm from "@/components/admin/courses/CourseForm";
+import CourseList from "@/components/admin/courses/CourseList";
+import type { CourseFormData, CourseItem } from "@/components/admin/courses/types";
 
-import CategoryList from "@/components/admin/courses/CategoryList";
-import SubcategoryList from "@/components/admin/courses/SubcategoryList";
-import CategoryForm from "@/components/admin/courses/CategoryForm";
-import SubcategoryForm from "@/components/admin/courses/SubcategoryForm";
-import DepartmentList from "@/components/admin/courses/DepartmentList";
+const initialFormData: CourseFormData = {
+  courseKey: "",
+  title: "",
+  duration: "",
+  eligibility: "",
+  intake: "",
+  overview: "",
+  subjects: [""],
+  campus: "",
+  lab: "",
+};
 
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+const Courses = () => {
+  const [formData, setFormData] = useState<CourseFormData>(initialFormData);
+  const [courses, setCourses] = useState<CourseItem[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
-const Courses: React.FC = () => {
+  const handleChange = (field: keyof CourseFormData, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleAddSubject = () => {
+    setFormData((prev) => ({
+      ...prev,
+      subjects: [...prev.subjects, ""],
+    }));
+  };
+
+  const handleChangeSubject = (index: number, value: string) => {
+    const updatedSubjects = [...formData.subjects];
+    updatedSubjects[index] = value;
+
+    setFormData((prev) => ({
+      ...prev,
+      subjects: updatedSubjects,
+    }));
+  };
+
+  const handleRemoveSubject = (index: number) => {
+    const updatedSubjects = formData.subjects.filter((_, i) => i !== index);
+
+    setFormData((prev) => ({
+      ...prev,
+      subjects: updatedSubjects.length ? updatedSubjects : [""],
+    }));
+  };
+
+  const handleReset = () => {
+    setFormData(initialFormData);
+    setEditingId(null);
+  };
+
+  const handleSave = () => {
+    if (!formData.courseKey || !formData.title) {
+      alert("Please fill Course Key and Course Title");
+      return;
+    }
+
+    if (editingId) {
+      setCourses((prev) =>
+        prev.map((course) =>
+          course.id === editingId ? { ...formData, id: editingId } : course
+        )
+      );
+      alert("Course updated successfully");
+    } else {
+      const newCourse: CourseItem = {
+        id: Date.now().toString(),
+        ...formData,
+      };
+
+      setCourses((prev) => [newCourse, ...prev]);
+      alert("Course added successfully");
+    }
+
+    setFormData(initialFormData);
+    setEditingId(null);
+  };
+
+  const handleEdit = (course: CourseItem) => {
+    setFormData({
+      courseKey: course.courseKey,
+      title: course.title,
+      duration: course.duration,
+      eligibility: course.eligibility,
+      intake: course.intake,
+      overview: course.overview,
+      subjects: course.subjects.length ? course.subjects : [""],
+      campus: course.campus,
+      lab: course.lab,
+    });
+
+    setEditingId(course.id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this course?"
+    );
+
+    if (!confirmDelete) return;
+
+    setCourses((prev) => prev.filter((course) => course.id !== id));
+
+    if (editingId === id) {
+      setFormData(initialFormData);
+      setEditingId(null);
+    }
+  };
+
   return (
-    <div className="space-y-6 p-4 sm:p-6">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Course Management
-          </h1>
-          <p className="text-sm text-muted-foreground sm:text-base">
-            Manage categories, subcategories, and departments for the degree
-            college
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/40 via-slate-50 to-white">
+      <div className="mx-auto max-w-6xl space-y-6 px-4 py-5 sm:px-6 md:px-8">
+        <CourseHeader />
+
+        <CourseForm
+          formData={formData}
+          isEditing={Boolean(editingId)}
+          onChange={handleChange}
+          onAddSubject={handleAddSubject}
+          onChangeSubject={handleChangeSubject}
+          onRemoveSubject={handleRemoveSubject}
+          onReset={handleReset}
+          onSave={handleSave}
+        />
+
+        <CourseList
+          courses={courses}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="rounded-2xl shadow-sm">
-          <CardContent className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-sm text-muted-foreground">Total Categories</p>
-              <h2 className="mt-1 text-2xl font-bold">3</h2>
-            </div>
-            <div className="rounded-xl bg-primary/10 p-3">
-              <Layers3 className="h-5 w-5 text-primary" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl shadow-sm">
-          <CardContent className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-sm text-muted-foreground">Subcategories</p>
-              <h2 className="mt-1 text-2xl font-bold">10</h2>
-            </div>
-            <div className="rounded-xl bg-primary/10 p-3">
-              <BookOpen className="h-5 w-5 text-primary" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl shadow-sm">
-          <CardContent className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-sm text-muted-foreground">Departments</p>
-              <h2 className="mt-1 text-2xl font-bold">6</h2>
-            </div>
-            <div className="rounded-xl bg-primary/10 p-3">
-              <Building2 className="h-5 w-5 text-primary" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl shadow-sm">
-          <CardContent className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-sm text-muted-foreground">Total Courses</p>
-              <h2 className="mt-1 text-2xl font-bold">22</h2>
-            </div>
-            <div className="rounded-xl bg-primary/10 p-3">
-              <GraduationCap className="h-5 w-5 text-primary" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Tabs defaultValue="categories" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 gap-2 md:grid-cols-4">
-          <TabsTrigger value="categories">Categories</TabsTrigger>
-          <TabsTrigger value="subcategories">Subcategories</TabsTrigger>
-          <TabsTrigger value="department">Departments</TabsTrigger>
-          <TabsTrigger value="forms">Forms</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="categories" className="space-y-6">
-          <CategoryList />
-        </TabsContent>
-
-        <TabsContent value="subcategories" className="space-y-6">
-          <SubcategoryList />
-        </TabsContent>
-
-        <TabsContent value="department" className="space-y-6">
-          <DepartmentList />
-        </TabsContent>
-
-        <TabsContent value="forms" className="space-y-6">
-          <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <CategoryForm />
-            <SubcategoryForm />
-          </div>
-        </TabsContent>
-      </Tabs>
     </div>
   );
 };
