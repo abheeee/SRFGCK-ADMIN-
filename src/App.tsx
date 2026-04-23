@@ -10,6 +10,7 @@ import Transport from "./pages/Transport";
 import Events from "./pages/Events";
 import Hostel from "./pages/Hostel";
 import GalleryPage from "./pages/GalleryPage";
+import HeaderSettings from "./components/admin/logo/HeaderSettings";
 // import AdmissionDetails from "@/pages/admin/AdmissionDetails";
 // import FormBuilder from "@/pages/admin/FormBuilder";
 // import Gallery from "@/pages/admin/Gallery";
@@ -54,6 +55,7 @@ function App() {
             <Route path="events" element={<Events />} />
             <Route path="hostel" element={<Hostel />} />
             <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/headersetting" element={<HeaderSettings />} />
             {/* <Route path="admissions/:id" element={<AdmissionDetails />} />
             <Route path="form-builder" element={<FormBuilder />} />
             <Route path="gallery" element={<Gallery />} />
