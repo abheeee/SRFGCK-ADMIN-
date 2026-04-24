@@ -6,19 +6,11 @@ import Dashboard from "@/pages/Dashboard";
 import Admissions from "@/pages/Admissions";
 import Courses from "./pages/Courses";
 import News from "./pages/News";
-
 import Events from "./pages/Events";
 import Hostel from "./pages/Hostel";
+import GovtBody from "./pages/Govtbody";
 import GalleryPage from "./pages/GalleryPage";
 import HeaderSettings from "./components/admin/logo/HeaderSettings";
-// import AdmissionDetails from "@/pages/admin/AdmissionDetails";
-// import FormBuilder from "@/pages/admin/FormBuilder";
-// import Gallery from "@/pages/admin/Gallery";
-// import News from "@/pages/admin/News";
-// import Transport from "@/pages/admin/Transport";
-// import Events from "@/pages/admin/Events";
-// import Hostel from "@/pages/admin/Hostel";
-// import Settings from "@/pages/admin/Settings";
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -50,20 +42,12 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="admissions" element={<Admissions />} />
             <Route path="courses" element={<Courses />} />
-            <Route path="news" element={<News />}/>
-            
-            <Route path="events" element={<Events />} />
-            <Route path="hostel" element={<Hostel />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-          <Route path="/headersetting" element={<HeaderSettings />} />
-            {/* <Route path="admissions/:id" element={<AdmissionDetails />} />
-            <Route path="form-builder" element={<FormBuilder />} />
-            <Route path="gallery" element={<Gallery />} />
             <Route path="news" element={<News />} />
-            <Route path="transport" element={<Transport />} />
             <Route path="events" element={<Events />} />
             <Route path="hostel" element={<Hostel />} />
-            <Route path="settings" element={<Settings />} /> */}
+            <Route path="government-body" element={<GovtBody />} />
+            <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/headersetting" element={<HeaderSettings />} />
 
             {/* Catch all - redirect to dashboard */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

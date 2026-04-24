@@ -10,6 +10,7 @@ import {
   Bus,
   Calendar,
   Home,
+  Users,
   Settings,
 } from "lucide-react";
 
@@ -27,6 +28,7 @@ const menuItems = [
   { icon: Bus, label: "Transport", path: "/transport" },
   { icon: Calendar, label: "Events", path: "/events" },
   { icon: Home, label: "Hostel", path: "/hostel" },
+  { icon: Users, label: "Government Body", path: "/government-body" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
