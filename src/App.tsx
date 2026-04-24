@@ -6,7 +6,7 @@ import Dashboard from "@/pages/Dashboard";
 import Admissions from "@/pages/Admissions";
 import Courses from "./pages/Courses";
 import News from "./pages/News";
-import Transport from "./pages/Transport";
+
 import Events from "./pages/Events";
 import Hostel from "./pages/Hostel";
 import GalleryPage from "./pages/GalleryPage";
@@ -51,7 +51,7 @@ function App() {
             <Route path="admissions" element={<Admissions />} />
             <Route path="courses" element={<Courses />} />
             <Route path="news" element={<News />}/>
-            <Route path="transport" element={<Transport/>}/>
+            
             <Route path="events" element={<Events />} />
             <Route path="hostel" element={<Hostel />} />
             <Route path="/gallery" element={<GalleryPage />} />

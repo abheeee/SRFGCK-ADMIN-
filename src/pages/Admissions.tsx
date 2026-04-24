@@ -1,97 +1,138 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Users, FileText, ShieldCheck, Clock3 } from "lucide-react";
 
-import ApplicationTable from "@/components/admin/admissions/ApplicationTable";
+import ApplicationTable, {
+  type Applicant,
+  applicantsData,
+} from "@/components/admin/admissions/ApplicationTable";
 import ApplicationDetails from "@/components/admin/admissions/ApplicationDetails";
-import DocumentViewer from "@/components/admin/admissions/DocumentViewer";
-import VerificationBadge from "@/components/admin/admissions/VerificationBadge";
-import StatusUpdateDialog from "@/components/admin/admissions/StatusUpdateDialog";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Admissions: React.FC = () => {
+  const [applicants, setApplicants] = useState<Applicant[]>(applicantsData);
+  const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(
+    null
+  );
+
+  const stats = useMemo(() => {
+    return {
+      total: applicants.length,
+      documents: applicants.reduce(
+        (sum, applicant) => sum + applicant.documents.length,
+        0
+      ),
+      verified: applicants.filter(
+        (applicant) => applicant.verification === "Verified"
+      ).length,
+      pending: applicants.filter((applicant) => applicant.status === "Pending")
+        .length,
+    };
+  }, [applicants]);
+
+  const updateStatus = (id: string, status: Applicant["status"]) => {
+    setApplicants((prev) =>
+      prev.map((applicant) =>
+        applicant.id === id ? { ...applicant, status } : applicant
+      )
+    );
+
+    setSelectedApplicant((prev) =>
+      prev && prev.id === id ? { ...prev, status } : prev
+    );
+  };
+
   return (
     <div className="space-y-6 p-4 sm:p-6">
       <div>
-        <h1 className="text-2xl font-bold sm:text-3xl">Admissions Management</h1>
-        <p className="text-sm text-muted-foreground">
-          Manage student applications, documents, verification, and status updates
+        <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+          Admissions Management
+        </h1>
+        <p className="text-sm text-slate-500">
+          Manage student applications and view complete admission form details.
         </p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="rounded-2xl shadow-sm">
-          <CardContent className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-sm text-muted-foreground">Total Applications</p>
-              <h2 className="mt-1 text-2xl font-bold">156</h2>
-            </div>
-            <Users className="h-5 w-5 text-primary" />
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl shadow-sm">
-          <CardContent className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-sm text-muted-foreground">Documents</p>
-              <h2 className="mt-1 text-2xl font-bold">420</h2>
-            </div>
-            <FileText className="h-5 w-5 text-primary" />
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl shadow-sm">
-          <CardContent className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-sm text-muted-foreground">Verified</p>
-              <h2 className="mt-1 text-2xl font-bold">98</h2>
-            </div>
-            <ShieldCheck className="h-5 w-5 text-primary" />
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-2xl shadow-sm">
-          <CardContent className="flex items-center justify-between p-5">
-            <div>
-              <p className="text-sm text-muted-foreground">Pending</p>
-              <h2 className="mt-1 text-2xl font-bold">58</h2>
-            </div>
-            <Clock3 className="h-5 w-5 text-primary" />
-          </CardContent>
-        </Card>
+        <StatsCard
+          title="Total Applications"
+          value={stats.total}
+          icon={<Users className="h-5 w-5 text-orange-600" />}
+        />
+        <StatsCard
+          title="Documents"
+          value={stats.documents}
+          icon={<FileText className="h-5 w-5 text-orange-600" />}
+        />
+        <StatsCard
+          title="Verified"
+          value={stats.verified}
+          icon={<ShieldCheck className="h-5 w-5 text-green-600" />}
+        />
+        <StatsCard
+          title="Pending"
+          value={stats.pending}
+          icon={<Clock3 className="h-5 w-5 text-yellow-600" />}
+        />
       </div>
 
-      <Tabs defaultValue="applications" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-5">
-          <TabsTrigger value="applications">Applications</TabsTrigger>
-          <TabsTrigger value="details">Details</TabsTrigger>
-          <TabsTrigger value="documents">Documents</TabsTrigger>
-          <TabsTrigger value="verification">Verification</TabsTrigger>
-          <TabsTrigger value="status">Update Status</TabsTrigger>
-        </TabsList>
+      <ApplicationTable
+        applicants={applicants}
+        selectedApplicant={selectedApplicant}
+        onViewDetails={setSelectedApplicant}
+      />
 
-        <TabsContent value="applications">
-          <ApplicationTable />
-        </TabsContent>
+      {!selectedApplicant && (
+        <Card className="rounded-2xl border-dashed border-slate-300 shadow-sm">
+          <CardContent className="p-8 text-center">
+            <h2 className="text-lg font-bold text-slate-900">
+              Select an Application
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Click View Details to see the full student application in popup
+              form style.
+            </p>
+          </CardContent>
+        </Card>
+      )}
 
-        <TabsContent value="details">
-          <ApplicationDetails />
-        </TabsContent>
-
-        <TabsContent value="documents">
-          <DocumentViewer />
-        </TabsContent>
-
-        <TabsContent value="verification">
-          <VerificationBadge />
-        </TabsContent>
-
-        <TabsContent value="status">
-          <StatusUpdateDialog />
-        </TabsContent>
-      </Tabs>
+      {selectedApplicant && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-2xl bg-white shadow-2xl">
+            <ApplicationDetails
+              applicant={selectedApplicant}
+              onUpdateStatus={updateStatus}
+              onClose={() => setSelectedApplicant(null)}
+            />
+          </div>
+        </div>
+      )}
     </div>
+  );
+};
+
+const StatsCard = ({
+  title,
+  value,
+  icon,
+}: {
+  title: string;
+  value: number;
+  icon: React.ReactNode;
+}) => {
+  return (
+    <Card className="rounded-2xl border-slate-200 shadow-sm">
+      <CardContent className="flex items-center justify-between p-5">
+        <div>
+          <p className="text-sm text-slate-500">{title}</p>
+          <h2 className="mt-1 text-2xl font-bold text-slate-900">{value}</h2>
+        </div>
+
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-50">
+          {icon}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
