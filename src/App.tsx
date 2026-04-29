@@ -7,11 +7,10 @@ import Admissions from "@/pages/Admissions";
 import Courses from "./pages/Courses";
 import News from "./pages/News";
 import Events from "./pages/Events";
-
-
+import Hostel from "./pages/Hostel";
+import ContactMessages from "./pages/ContactMessages";
 import GalleryPage from "./pages/GalleryPage";
 import HeaderSettings from "./components/admin/logo/HeaderSettings";
-import ContactMessages from "./pages/ContactMessages"; // ✅ kept from HEAD
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -21,42 +20,46 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Login Route - No Layout */}
-        <Route path="/login" element={<Login />} />
+    <>
+      <BrowserRouter>
+        <Routes>
+          {/* Login Route - No Layout */}
+          <Route path="/login" element={<Login />} />
 
-        {/* Protected Admin Routes with Layout */}
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <AdminLayout />
-            </PrivateRoute>
-          }
-        >
-          {/* Redirect root to dashboard */}
-          <Route index element={<Navigate to="dashboard" replace />} />
+          {/* Protected Admin Routes with Layout */}
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <AdminLayout />
+              </PrivateRoute>
+            }
+          >
+            {/* Redirect root to dashboard */}
+            <Route index element={<Navigate to="/dashboard" replace />} />
 
-          {/* Admin Pages */}
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="admissions" element={<Admissions />} />
-          <Route path="courses" element={<Courses />} />
-          <Route path="news" element={<News />} />
-          <Route path="events" element={<Events />} />
-          <Route path="hostel" element={<Hostel />} />
-          <Route path="government-body" element={<GovtBody />} />
+            {/* Admin Pages */}
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="admissions" element={<Admissions />} />
+            <Route path="courses" element={<Courses />} />
 
-          {/* ✅ FIXED: removed "/" (must be relative inside layout) */}
-          <Route path="gallery" element={<GalleryPage />} />
-          <Route path="headersetting" element={<HeaderSettings />} />
-          <Route path="contact-messages" element={<ContactMessages />} />
+            <Route path="news" element={<News />} />
+            <Route path="events" element={<Events />} />
+            <Route path="hostel" element={<Hostel />} />
+           
+            <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/headersetting" element={<HeaderSettings />} />
 
-          {/* Catch all */}
-          <Route path="*" element={<Navigate to="dashboard" replace />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+
+            <Route path="/Contactmessage" element={<ContactMessages/>}/>
+            <Route path="/gallery" element={<GalleryPage />} />
+
+            {/* Catch all - redirect to dashboard */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
