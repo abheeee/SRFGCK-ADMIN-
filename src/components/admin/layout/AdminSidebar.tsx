@@ -26,6 +26,7 @@ const menuItems = [
   { icon: Newspaper, label: "News", path: "/news" },
   { icon: Bus, label: "Transport", path: "/transport" },
   { icon: Calendar, label: "Events", path: "/events" },
+   { icon: Calendar, label: "Contact", path: "/ContactMessages" },
   { icon: Home, label: "Hostel", path: "/hostel" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
