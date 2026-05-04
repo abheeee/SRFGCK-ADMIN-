@@ -2,7 +2,10 @@ import { useState } from "react";
 import CourseHeader from "@/components/admin/courses/CourseHeader";
 import CourseForm from "@/components/admin/courses/CourseForm";
 import CourseList from "@/components/admin/courses/CourseList";
-import type { CourseFormData, CourseItem } from "@/components/admin/courses/types";
+import type {
+  CourseFormData,
+  CourseItem,
+} from "@/components/admin/courses/types";
 
 const initialFormData: CourseFormData = {
   courseKey: "",
@@ -120,7 +123,7 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/40 via-slate-50 to-white">
-      <div className="mx-auto max-w-6xl space-y-6 px-4 py-5 sm:px-6 md:px-8">
+      <div className="w-full px-6 lg:px-8 py-6 space-y-6">
         <CourseHeader />
 
         <CourseForm

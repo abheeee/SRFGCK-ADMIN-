@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, type ChangeEvent, type FormEvent } from "react";
 import { Save, Upload, Image as ImageIcon, Plus, Trash2 } from "lucide-react";
 
@@ -70,7 +72,7 @@ const HeaderSettings: React.FC = () => {
   };
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full px-6 lg:px-8 py-6 space-y-6">
       {/* Page Header */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -188,7 +190,9 @@ const HeaderSettings: React.FC = () => {
                 <input
                   type="text"
                   value={item}
-                  onChange={(e) => handleMarqueeChange(index, e.target.value)}
+                  onChange={(e) =>
+                    handleMarqueeChange(index, e.target.value)
+                  }
                   placeholder={`Marquee text ${index + 1}`}
                   className="flex-1 rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
                 />

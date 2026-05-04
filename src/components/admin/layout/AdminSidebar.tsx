@@ -13,6 +13,7 @@ import {
   Home,
   Users,
   Settings,
+
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -25,12 +26,13 @@ const menuItems = [
   { icon: FileText, label: "Logo", path: "/headersetting" },
   { icon: BookOpen, label: "Courses", path: "/courses" },
   { icon: Image, label: "Gallery", path: "/gallery" },
-  { icon: Newspaper, label: "News", path: "/news" },
+  // { icon: Newspaper, label: "News", path: "/news" },
   
   { icon: Calendar, label: "Events", path: "/events" },
    { icon: Contact, label: "Contact", path: "/Contactmessage" },
  
-  { icon: Users, label: "Government Body", path: "/government-body" },
+  { icon: Image, label: "About", path: "/About" },
+   { icon: Image, label: "Governing", path: "/GoverningBody" },
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 

@@ -11,6 +11,8 @@ import Hostel from "./pages/Hostel";
 import ContactMessages from "./pages/ContactMessages";
 import GalleryPage from "./pages/GalleryPage";
 import HeaderSettings from "./components/admin/logo/HeaderSettings";
+import About from "./pages/About";
+import GoverningBody from "./pages/GoverningBody";
 
 // Protected Route Component
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -53,6 +55,10 @@ function App() {
 
             <Route path="/Contactmessage" element={<ContactMessages/>}/>
             <Route path="/gallery" element={<GalleryPage />} />
+
+            <Route path="/GoverningBody" element={<GoverningBody />} />
+            
+            <Route path="/About" element={<About/>} />
 
             {/* Catch all - redirect to dashboard */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
