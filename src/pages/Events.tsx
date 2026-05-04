@@ -19,7 +19,7 @@ const Events: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card className="rounded-2xl shadow-sm">
           <CardContent className="flex items-center justify-between p-5">
             <div>
